@@ -20,6 +20,5 @@
    <polygon points="0,0 192,0 192,-320 0,-320"/>
   </object>
   <object id="5" name="player" x="128" y="384" width="64" height="64"/>
-  <object id="6" x="477.913" y="760.054"/>
  </objectgroup>
 </map>

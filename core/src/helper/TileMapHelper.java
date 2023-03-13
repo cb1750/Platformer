@@ -22,6 +22,7 @@ public class TileMapHelper {
     private TiledMap tiledMap;
     private GameScreen gameScreen;
 
+
     public TileMapHelper(GameScreen gameScreen){
      this.gameScreen=gameScreen;
     }
@@ -42,6 +43,8 @@ public class TileMapHelper {
                 Rectangle rectangle = ((RectangleMapObject)mapObject).getRectangle();
                 String rectangleName = mapObject.getName();
 
+
+
                 if(rectangleName != null && rectangleName.equals("player")){
                     Body body = BodyHelperService.createBody(
                             rectangle.getX() + rectangle.getWidth() /2,
@@ -49,9 +52,18 @@ public class TileMapHelper {
                             rectangle.getWidth(),
                             rectangle.getHeight(),
                             false,
-                            gameScreen.getWorld()
+                            gameScreen.getWorld(),false
+                    );
+                    Body shadowBody = BodyHelperService.createBody(
+                            rectangle.getX() + rectangle.getWidth() /2,
+                            rectangle.getY() + rectangle.getHeight() /2,
+                            rectangle.getWidth(),
+                            rectangle.getHeight(),
+                            false,
+                            gameScreen.getWorld(),true
                     );
                     gameScreen.setPlayer(new Player(rectangle.getWidth(), rectangle.getHeight(), body));
+                    gameScreen.setPlayer(new Player(rectangle.getWidth(), rectangle.getHeight(), shadowBody));
 
                 }
             }
@@ -59,9 +71,11 @@ public class TileMapHelper {
 
     }
     private void createStaticBody(PolygonMapObject polygonMapObject){
+
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.StaticBody;
         Body body = gameScreen.getWorld().createBody(bodyDef);
+//        bodyDef.
         Shape shape = createPolygonShape(polygonMapObject);
         body.createFixture(shape, 1000);
         shape.dispose();

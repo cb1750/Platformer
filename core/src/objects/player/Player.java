@@ -20,10 +20,20 @@ public class Player extends GameEntity{
     @Override
     public void update() {
         x = body.getPosition().x*PPM;
-        y = body.getPosition().x*PPM;
+        y = body.getPosition().y*PPM;
+
+
+
+
+
 
         checkUserInput();
+        if(body.getPosition().y > 600 || body.getPosition().y < 0){
+            y=0;
+        }
+
     }
+
 
     @Override
     public void render(SpriteBatch batch) {

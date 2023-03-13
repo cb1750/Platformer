@@ -11,7 +11,9 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.World;
+import helper.ListenerClass;
 import helper.TileMapHelper;
 import objects.player.Player;
 
@@ -25,14 +27,18 @@ public class GameScreen extends ScreenAdapter {
 
     private OrthogonalTiledMapRenderer orthogonalTiledMapRenderer;
     private TileMapHelper tileMapHelper;
+    private ListenerClass listenerClass;
 
     //Game objects
     private Player player;
+    private Player shadowPlayer;
+    private  int playerCount;
 
    public GameScreen(OrthographicCamera camera){
     this.camera = camera;
     this.batch = new SpriteBatch();
     this.world = new World(new Vector2(0,-25f),false);
+    world.setContactListener(listenerClass);
     this.box2DDebugRenderer = new Box2DDebugRenderer();
 
     this.tileMapHelper = new TileMapHelper(this);
@@ -46,6 +52,11 @@ public class GameScreen extends ScreenAdapter {
      batch.setProjectionMatrix(camera.combined);
      orthogonalTiledMapRenderer.setView(camera);
      player.update();
+     shadowPlayer.getBody().getPosition().set(player.getBody().getPosition().x,player.getBody().getPosition().y);
+
+
+
+
 
      if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
          Gdx.app.exit();
@@ -79,6 +90,15 @@ public class GameScreen extends ScreenAdapter {
         return world;
     }
     public void setPlayer(Player player){
-       this.player = player;
+
+       if(playerCount > 0) {
+           this.shadowPlayer = player;
+       }
+       else {
+           this.player = player;
+           playerCount++;
+       }
+
+
     }
 }
