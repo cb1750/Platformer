@@ -53,7 +53,7 @@ public class GameScreen extends ScreenAdapter {
      orthogonalTiledMapRenderer.setView(camera);
      player.update();
      shadowPlayer.getBody().getPosition().set(player.getBody().getPosition().x,player.getBody().getPosition().y);
-
+   // ^Doesn't work. No clue why.
 
 
 
