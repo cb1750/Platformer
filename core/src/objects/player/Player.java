@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import helper.BodyHelperService;
 
 import static helper.Constants.PPM;
 
@@ -22,15 +23,19 @@ public class Player extends GameEntity{
         x = body.getPosition().x*PPM;
         y = body.getPosition().y*PPM;
 
+        if(x > 2800*PPM || x < -140*PPM){
+            body.setTransform(BodyHelperService.startingX,BodyHelperService.startingY,0);
+        }
+        if(y > 700*PPM || y < 0*PPM){
+            body.setTransform(BodyHelperService.startingX,BodyHelperService.startingY,0);
+        }
+
 
 
 
 
 
         checkUserInput();
-        if(body.getPosition().y > 600 || body.getPosition().y < 0){
-            y=0;
-        }
 
     }
 

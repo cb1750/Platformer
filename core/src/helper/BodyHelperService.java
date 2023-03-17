@@ -6,11 +6,16 @@ import static helper.Constants.PPM;
 
 public class BodyHelperService {
 
+    public static float startingX;
+    public static float startingY;
+
     public static Body createBody(float x, float y, float width, float height, boolean isStatic, World world,boolean isSensor){
         BodyDef bodyDef = new BodyDef();
         bodyDef.type= isStatic ? BodyDef.BodyType.StaticBody : BodyDef.BodyType.DynamicBody;
         //If body is stationary it becomes a static body, if not it becomes a dynamic one (think of a player)
         bodyDef.position.set(x/PPM, y/PPM);
+        startingX = x/PPM;
+        startingY = y/PPM;
         bodyDef.fixedRotation = true;
         Body body = world.createBody(bodyDef);
 
@@ -26,4 +31,6 @@ public class BodyHelperService {
         shape.dispose();
         return body;
     }
+
+
 }

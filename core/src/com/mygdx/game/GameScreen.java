@@ -8,15 +8,20 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.joints.MouseJoint;
+import com.badlogic.gdx.physics.box2d.joints.MouseJointDef;
+import com.badlogic.gdx.physics.box2d.joints.WeldJointDef;
 import helper.ListenerClass;
 import helper.TileMapHelper;
 import objects.player.Player;
 
+import static com.badlogic.gdx.physics.box2d.JointDef.JointType.MouseJoint;
 import static helper.Constants.PPM;
 
 public class GameScreen extends ScreenAdapter {
@@ -52,8 +57,8 @@ public class GameScreen extends ScreenAdapter {
      batch.setProjectionMatrix(camera.combined);
      orthogonalTiledMapRenderer.setView(camera);
      player.update();
-     shadowPlayer.getBody().getPosition().set(player.getBody().getPosition().x,player.getBody().getPosition().y);
-   // ^Doesn't work. No clue why.
+     shadowPlayer.getBody().setTransform(player.getBody().getPosition(),0);
+
 
 
 
@@ -92,7 +97,7 @@ public class GameScreen extends ScreenAdapter {
     public void setPlayer(Player player){
 
        if(playerCount > 0) {
-           this.shadowPlayer = player;
+           this.shadowPlayer = player; //Creates a sensor player to see when it touches blocks
        }
        else {
            this.player = player;
